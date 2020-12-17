@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./payroll_form.css";
 import { useParams, Link, withRouter } from "react-router-dom";
+// import EmployeeService from "../../services/employee-service";
 
 const PayrollForm = props => {
   let initialValue = {
@@ -33,35 +34,51 @@ const PayrollForm = props => {
     }
   };
   const [formValue, setForm] = useState(initialValue);
-  // const params = useParams();
-  const initialize = event => {
-    let fields = this.state.fields;
-    fields.name = "";
-    fields.department = [];
-    fields.salary = 40000;
-    fields.profile = "";
-    fields.notes = "";
-    this.setState({
-      fields
-    });
+  const params = useParams();
+
+  useEffect(() => {
+    if (params.id) {
+      getDataById(params.id);
+    }
+  }, []);
+
+  let handleChange = event => {
+    setForm({ ...formValue, [event.target.name]: event.target.value })
   };
 
-  let handleChange = e => {
-    let fields = this.state.fields;
-    fields[e.target.name] = e.target.value;
-    this.setState({
-      fields
-    });
-  };
+  let validFormData = async () => {let isError = false;
+        let error = {
+            department: '',
+            name: '',
+            gender: '',
+            salary: '',
+            profileUrl: '',
+            startDate: ''
+        }
+        if (formValue.name.length < 1) {
+            error.name = 'name is required field'
+            isError = true;
+        }
+        if (formValue.gender.length < 1) {
+            error.gender = 'gender is required field'
+            isError = true;
+        }
+        if (formValue.salary.length < 1) {
+            error.salary = 'salary is required field'
+            isError = true;
+        }
+        if (formValue.profileUrl.length < 1) {
+            error.profileUrl = 'profile is required field'
+            isError = true;
+        }
 
-  let forSalaryRange = event => {
-    this.setState({
-      salary: event.target.value
-    });
-    this.handleChange(event);
-  };
-
-  let validDataForm = async () => {};
+        if (formValue.departMentValue.length < 1) {
+            error.department = 'department is required field'
+            isError = true;
+        }
+        await setForm({ ...formValue, error: error })
+        return isError;
+    };
 
   const onCheckChange = (name) => {
     let index = formValue.departMentValue.indexOf(name);
@@ -79,16 +96,28 @@ const PayrollForm = props => {
 
   let handleSubmit = event => {
     event.preventDefault();
-    let Employee = {
-      employeeName: this.state.fields.name,
-      employeeDept: this.state.fields.department,
-      employeeGender: this.state.fields.gender,
-      employeeSalary: this.state.fields.salary,
-      employeeNotes: this.state.fields.notes,
-      employeeProfile: this.state.fields.profile
+    if(await validFormData()){
+      console.log("error", formValue);
+      return;
+    }
+    let employee = {
+      name: formValue.name,
+      departMent: formValue.departMentValue,
+      gender: formValue.gender,
+      salary: formValue.salary,
+      startDate: '${formValue.day} ${formValue.month} ${formValue.year}',
+      notes: formValue.notes,
+      id: formValue.id,
+      profileUrl: formValue.profileUrl,
     };
-    console.log(Employee);
-  };
+    console.log(employee);
+  }
+    
+  const reset = () => {
+    setForm({ ...initialValue, id: formValue.id, isUpdate: formValue.isUpdate });
+
+    console.log(formValue);
+  }
 
   return (
     <div className="payroll-main">
@@ -114,7 +143,7 @@ const PayrollForm = props => {
               id="name"
               name="name"
               value={formValue.name}
-              onChange={this.handleChange}
+              onChange={handleChange}
               placeholder="Your name.."
             />
           </div>
@@ -133,7 +162,7 @@ const PayrollForm = props => {
                   }
                   name="profileUrl"
                   value="../../assets/profile-images/Ellipse -3.png"
-                  onChange={this.handleChange}
+                  onChange={handleChange}
                 />
                 <img className="profile" src={ } alt="profile" />
               </label>
@@ -146,7 +175,7 @@ const PayrollForm = props => {
                     "../../assets/profile-images/Ellipse 1.png"
                   }
                   value="../../assets/profile-images/Ellipse 1.png"
-                  onChange={this.handleChange}
+                  onChange={handleChange}
                 />
                 <img className="profile" src={ } alt="profile" />
               </label>
@@ -159,7 +188,7 @@ const PayrollForm = props => {
                     "../../assets/profile-images/Ellipse -8.png"
                   }
                   value="../../assets/profile-images/Ellipse -8.png"
-                  onChange={this.handleChange}
+                  onChange={handleChange}
                 />
                 <img className="profile" src={ } alt="profile" />
               </label>
@@ -172,7 +201,7 @@ const PayrollForm = props => {
                     "../../assets/profile-images/Ellipse -7.png"
                   }
                   value="../../assets/profile-images/Ellipse -7.png"
-                  onChange={this.handleChange}
+                  onChange={handleChange}
                 />
                 <img className="profile" src={ } alt="profile" />
               </label>
@@ -188,7 +217,7 @@ const PayrollForm = props => {
                 type="radio"
                 id="male"
                 checked={formValue.gender === "male"}
-                onChange={this.handleChange}
+                onChange={handleChange}
                 name="gender"
                 value="male"
               />
@@ -199,7 +228,7 @@ const PayrollForm = props => {
                 type="radio"
                 id="female"
                 checked={formValue.gender === "female"}
-                onChange={this.handleChange}
+                onChange={handleChange}
                 name="gender"
                 value="female"
               />
@@ -241,7 +270,7 @@ const PayrollForm = props => {
             <input
               className="input"
               type="range"
-              onChange={this.handleChange}
+              onChange={handleChange}
               id="salary"
               value={formValue.salary}
               name="salary"
@@ -260,7 +289,7 @@ const PayrollForm = props => {
             <div>
               <select
                 value={formValue.day}
-                onChange={this.handleChange}
+                onChange={handleChange}
                 id="day"
                 name="day"
               >
@@ -298,7 +327,7 @@ const PayrollForm = props => {
               </select>
               <select
                 value={formValue.month}
-                onChange={this.handleChange}
+                onChange={handleChange}
                 id="month"
                 name="month"
               >
@@ -317,7 +346,7 @@ const PayrollForm = props => {
               </select>
               <select
                 value={formValue.year}
-                onChange={this.handleChange}
+                onChange={handleChange}
                 id="year"
                 name="year"
               >
@@ -336,7 +365,7 @@ const PayrollForm = props => {
               Notes
             </label>
             <textarea
-              onChange={this.handleChange}
+              onChange={handleChange}
               id="notes"
               value={formValue.notes}
               className="input"
@@ -362,6 +391,7 @@ const PayrollForm = props => {
               <button
                 type="button"
                 className="resetButton button"
+                onClick={reset}
               >
                 Reset
               </button>

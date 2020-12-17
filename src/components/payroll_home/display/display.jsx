@@ -18,7 +18,7 @@ const Display = props => {
           <tr key={ind}>
             <td>
               {" "}
-              <img className="profile" src={profile} alt="" />{" "}
+              <img className="profile" src={ } alt="" />{" "}
             </td>
           </tr>;
         })}

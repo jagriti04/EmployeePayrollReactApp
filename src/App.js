@@ -1,6 +1,7 @@
 import React from "react";
 import "./style.css";
-import PayrollForm from "./components/payroll_form/payroll_form";
+import { PayrollForm } from "./components/payroll_form/payroll_form";
+import { PayrollHome } from "./components/payroll_home/payroll_home";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 export default class App extends React.Component {
@@ -11,6 +12,9 @@ export default class App extends React.Component {
           <Switch>
             <Route exact path="">
               <PayrollForm />
+            </Route>
+            <Route exact path="/home">
+              <PayrollHome />
             </Route>
           </Switch>
         </BrowserRouter>

@@ -1,5 +1,5 @@
 import React from "react";
-import Display from "./display/display";
+import { Display } from "./display/display";
 
 class PayrollHome extends React.Component {
   render() {
