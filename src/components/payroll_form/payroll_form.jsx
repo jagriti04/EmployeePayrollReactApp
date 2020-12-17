@@ -2,6 +2,52 @@ import React from "react";
 import "./payroll_form.css";
 
 class PayrollForm extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      fields: {}
+      // name: "",
+      // department: [],
+      // gender: "",
+      // salary: 40000,
+      // startDate: "",
+      // notes: "",
+      // profileUrl: ""
+    };
+  }
+  // handleName = event => {
+  //   console.log(event.target.value);
+  //   this.setState({
+  //     name: event.target.value
+  //   });
+  // };
+
+  handleChange = e => {
+    let fields = this.state.fields;
+    fields[e.target.name] = e.target.value;
+    this.setState({
+      fields
+    });
+  };
+
+  forSalaryRange = event => {
+    this.setState({
+      salary: event.target.value
+    });
+  };
+
+  validDataForm = async () => {};
+
+  handleSubmit = () => {
+    let Employee = {
+      employeeName: this.state.fields.name,
+      employeeDept: this.state.fields.department,
+      employeeGender: this.state.fields.gender
+    };
+    console.log(Employee);
+  };
+
   render() {
     return (
       <div className="payroll_div">
@@ -34,6 +80,9 @@ class PayrollForm extends React.Component {
                 name="name"
                 placeholder="Your name..."
                 required
+                onChange={event => {
+                  this.handleChange(event);
+                }}
               />
               <error-output class="text-error" id="name-error" for="text" />
             </div>
@@ -184,10 +233,13 @@ class PayrollForm extends React.Component {
                 min="30000"
                 max="50000"
                 step="100"
-                value="40000"
+                value={this.state.salary}
+                onChange={event => {
+                  this.forSalaryRange(event);
+                }}
               />
               <output class="salary-output text" id="salaryOutput" for="salary">
-                40000
+                {this.state.salary}
               </output>
             </div>
             <div class="row-content">
