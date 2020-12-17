@@ -7,21 +7,21 @@ class PayrollForm extends React.Component {
 
     this.state = {
       fields: {}
-      // name: "",
-      // department: [],
-      // gender: "",
-      // salary: 40000,
-      // startDate: "",
-      // notes: "",
-      // profileUrl: ""
     };
+    this.initialize();
   }
-  // handleName = event => {
-  //   console.log(event.target.value);
-  //   this.setState({
-  //     name: event.target.value
-  //   });
-  // };
+
+  initialize = event => {
+    let fields = this.state.fields;
+    fields.name = "";
+    fields.department = [];
+    fields.salary = 40000;
+    fields.profile = "";
+    fields.notes = "";
+    this.setState({
+      fields
+    });
+  };
 
   handleChange = e => {
     let fields = this.state.fields;
@@ -35,15 +35,20 @@ class PayrollForm extends React.Component {
     this.setState({
       salary: event.target.value
     });
+    this.handleChange(event);
   };
 
   validDataForm = async () => {};
 
-  handleSubmit = () => {
+  handleSubmit = event => {
+    event.preventDefault();
     let Employee = {
       employeeName: this.state.fields.name,
       employeeDept: this.state.fields.department,
-      employeeGender: this.state.fields.gender
+      employeeGender: this.state.fields.gender,
+      employeeSalary: this.state.fields.salary,
+      employeeNotes: this.state.fields.notes,
+      employeeProfile: this.state.fields.profile
     };
     console.log(Employee);
   };
@@ -65,8 +70,8 @@ class PayrollForm extends React.Component {
           <form
             class="form"
             action="#"
-            onreset="resetForm()"
-            onsubmit="save(); return false"
+            onReset="resetForm()"
+            onSubmit={this.handleSubmit}
           >
             <div class="form-head">Employee Payroll Form</div>
             <div class="row-content">
@@ -98,6 +103,9 @@ class PayrollForm extends React.Component {
                     name="profile"
                     value="../assets/profile-images/Ellipse -3.png"
                     required
+                    onChange={event => {
+                      this.handleChange(event);
+                    }}
                   />
                   <img
                     class="profile"
@@ -112,6 +120,9 @@ class PayrollForm extends React.Component {
                     name="profile"
                     value="../assets/profile-images/Ellipse -1.png"
                     required
+                    onChange={event => {
+                      this.handleChange(event);
+                    }}
                   />
                   <img
                     class="profile"
@@ -126,6 +137,9 @@ class PayrollForm extends React.Component {
                     name="profile"
                     value="../assets/profile-images/Ellipse -8.png"
                     required
+                    onChange={event => {
+                      this.handleChange(event);
+                    }}
                   />
                   <img
                     class="profile"
@@ -140,6 +154,9 @@ class PayrollForm extends React.Component {
                     name="profile"
                     value="../assets/profile-images/Ellipse -7.png"
                     required
+                    onChange={event => {
+                      this.handleChange(event);
+                    }}
                   />
                   <img
                     class="profile"
@@ -154,11 +171,27 @@ class PayrollForm extends React.Component {
                 Gender
               </label>
               <div>
-                <input type="radio" id="male" name="gender" value="male" />
+                <input
+                  type="radio"
+                  id="male"
+                  name="gender"
+                  value="male"
+                  onChange={event => {
+                    this.handleChange(event);
+                  }}
+                />
                 <label class="text" for="male">
                   Male{" "}
                 </label>
-                <input type="radio" id="female" name="gender" value="female" />
+                <input
+                  type="radio"
+                  id="female"
+                  name="gender"
+                  value="female"
+                  onChange={event => {
+                    this.handleChange(event);
+                  }}
+                />
                 <label class="text" for="female">
                   Female
                 </label>
@@ -175,6 +208,9 @@ class PayrollForm extends React.Component {
                   id="hr"
                   name="department"
                   value="HR"
+                  onChange={event => {
+                    this.handleChange(event);
+                  }}
                 />
                 <label class="text" for="hr">
                   HR
@@ -185,6 +221,9 @@ class PayrollForm extends React.Component {
                   id="sales"
                   name="department"
                   value="Sales"
+                  onChange={event => {
+                    this.handleChange(event);
+                  }}
                 />
                 <label class="text" for="sales">
                   Sales
@@ -195,6 +234,9 @@ class PayrollForm extends React.Component {
                   id="finance"
                   name="department"
                   value="Finance"
+                  onChange={event => {
+                    this.handleChange(event);
+                  }}
                 />
                 <label class="text" for="finance">
                   Finance
@@ -205,6 +247,9 @@ class PayrollForm extends React.Component {
                   id="engineer"
                   name="department"
                   value="Engineer"
+                  onChange={event => {
+                    this.handleChange(event);
+                  }}
                 />
                 <label class="text" for="engineer">
                   Engineer
@@ -215,6 +260,9 @@ class PayrollForm extends React.Component {
                   id="others"
                   name="department"
                   value="Others"
+                  onChange={event => {
+                    this.handleChange(event);
+                  }}
                 />
                 <label class="text" for="others">
                   Others
@@ -308,7 +356,15 @@ class PayrollForm extends React.Component {
               <label class="label text" for="notes">
                 Notes
               </label>
-              <textarea id="notes" class="input" name="Notes" placeholder="" />
+              <input
+                id="notes"
+                class="input"
+                name="notes"
+                placeholder=""
+                onChange={event => {
+                  this.handleChange(event);
+                }}
+              />
             </div>
             <div class="buttonParent">
               <a href="./home.html" class="resetButton button cancelButton">
@@ -319,6 +375,7 @@ class PayrollForm extends React.Component {
                   type="submit"
                   class="button submitButton"
                   id="submitButton"
+                  onSubmit={this.handleSubmit}
                 >
                   Submit
                 </button>
