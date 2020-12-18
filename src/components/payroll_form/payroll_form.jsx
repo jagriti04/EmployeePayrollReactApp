@@ -105,7 +105,7 @@ const PayrollForm = props => {
       departMent: formValue.departMentValue,
       gender: formValue.gender,
       salary: formValue.salary,
-      startDate: '${formValue.day} ${formValue.month} ${formValue.year}',
+      startDate: `${formValue.day} ${formValue.month} ${formValue.year}`,
       notes: formValue.notes,
       id: formValue.id,
       profileUrl: formValue.profileUrl,
@@ -120,7 +120,7 @@ const PayrollForm = props => {
   }
 
   return (
-    <div className="payroll-main">
+    <div className="payroll-form">
       <header className="header row center">
         <div className="logo">
           <img src="" alt="" />
@@ -376,7 +376,7 @@ const PayrollForm = props => {
           </div>
 
           <div className="buttonParent">
-            <Link to="" className="resetButton button cancelButton">
+            <Link to="/home" className="resetButton button cancelButton">
               Cancel
             </Link>
 
