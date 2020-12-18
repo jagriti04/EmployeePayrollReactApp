@@ -1,13 +1,35 @@
 import React from "react";
 import Display from "./display/display";
 import EmployeeService from "../../services/employee-service";
+import {Link} from "react-router-dom";
 
 class PayrollHome extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       searchExpand: false,
-      employeeArray: [],
+      employeeArray: [
+        {
+          name: "Kamla",
+          departMent: ["Engineer"],
+          gender: "female",
+          salary: "30000",
+          startDate: "1 June 2020",
+          notes: "",
+          id: 16,
+          profileUrl: "../../assets/profile-images/Ellipse -8.png"
+        },
+        {
+          name: "Rakesh",
+          departMent: ["HR", "Finance"],
+          gender: "male",
+          salary: "60000",
+          startDate: "1 Jan 2018",
+          notes: "Hello123",
+          id: 17,
+          profileUrl: "../../assets/profile-images/Ellipse-8.png"
+        }
+      ],
       AllEmployeeArray: []
     };
     this.employeeService = new EmployeeService();
@@ -63,12 +85,12 @@ class PayrollHome extends React.Component {
             <div className="emp-details-text">
               Employee Details <div class="emp-count"> 10</div>
             </div>
-            <a href="form" className="add-button">
-              <img src="../assets/icons/add-24px.svg" /> Add User
-            </a>
+            <Link to="form" className="add-button">
+              <img src={} alt="" /> Add User
+            </Link>
           </div>
 
-          <div class="table-main">
+          <div className="table-main">
             <Display employeeArray={this.state.employeeArray} />
           </div>
         </div>
