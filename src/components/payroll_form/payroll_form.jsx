@@ -96,10 +96,10 @@ const PayrollForm = props => {
 
   let handleSubmit = event => {
     event.preventDefault();
-    if(await validFormData()){
-      console.log("error", formValue);
-      return;
-    }
+    // if(await validFormData()){
+    //   console.log("error", formValue);
+    //   return;
+    // }
     let employee = {
       name: formValue.name,
       departMent: formValue.departMentValue,

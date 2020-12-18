@@ -13,15 +13,16 @@ const Display = props => {
         <th> Start Date </th>
         <th> Actions </th>
       </tr>
-      {props.employeeArray &&
-        props.employeeArray.map((element, ind) => {
-          <tr key={ind}>
+      // {props.employeeArray &&
+      //   props.employeeArray.map((element, ind) => {
+          <tr key={1}>
             <td>
               {" "}
               <img className="profile" src={ } alt="" />{" "}
             </td>
-          </tr>;
-        })}
+          </tr>
+        // })}
+}
     </table>
   );
 };
